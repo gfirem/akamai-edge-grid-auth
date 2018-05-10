@@ -84,6 +84,12 @@ class EdgeGridAuth {
     });
   }
 
+  /**
+   * Paste in a formatted credential block
+   *
+   * @param options
+   * @returns {PromiseLike<T>}
+   */
   paste(options) {
     let newconfig = {};
     return multiLine('Input credential blocks followed by a newline:')
@@ -115,6 +121,12 @@ class EdgeGridAuth {
       });
   }
 
+  /**
+   * Copy credentials from one section to a new one
+   *
+   * @param options
+   * @returns {PromiseLike<T>}
+   */
   copy(options) {
     return Utils.readConfigFile(options.config)
       .then(config => {
@@ -129,6 +141,12 @@ class EdgeGridAuth {
       });
   }
 
+  /**
+   * Setup authentication for Akamai
+   *
+   * @param options
+   * @returns {Promise<any>}
+   */
   setup(options) {
     let questions = [];
     let list = ['client_secret', 'client_token', 'access_token', 'host'];
@@ -169,19 +187,6 @@ class EdgeGridAuth {
         }
         return Utils.writeConfigFile(filename, ini.stringify(config, {whitespace: true}));
       });
-  }
-
-  makeRequest(request) {
-    return new Promise((resolve, reject) => {
-      this._nsClient.auth(request);
-      this._nsClient.send((data, response) => {
-        if (response.statusCode !== 200) {
-          reject('Unable to complete action.  Status code ' + response.statusCode);
-        } else {
-          resolve(response);
-        }
-      });
-    });
   }
 }
 
