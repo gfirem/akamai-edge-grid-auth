@@ -6,13 +6,20 @@ ignore:
     - pkg > pkg-fetch > request > hawk > hoek:
         reason: None given
         expires: '2018-06-08T16:58:18.416Z'
-      pkg > pkg-fetch > request > hawk > sntp > hoek:
-        reason: No solution until now
-        expires: '2018-06-08T17:40:00.660Z'
     - pkg > pkg-fetch > request > hawk > boom > hoek:
         reason: No solution
         expires: '2018-06-08T16:58:18.416Z'
-      pkg > pkg-fetch > request > hawk > cryptiles > boom > hoek:
+    - pkg > pkg-fetch > request > hawk > sntp > hoek:
         reason: No solution until now
         expires: '2018-06-08T17:40:00.660Z'
+    - pkg > pkg-fetch > request > hawk > cryptiles > boom > hoek:
+        reason: No solution until now
+        expires: '2018-06-08T17:40:00.660Z'
+  'npm:stringstream:20180511':
+    - edgegrid > request > stringstream:
+        reason: No solution now
+        expires: '2018-06-14T19:14:08.544Z'
+    - request > stringstream:
+        reason: No solution now
+        expires: '2018-06-14T19:14:08.544Z'
 patch: {}
