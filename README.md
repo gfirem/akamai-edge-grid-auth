@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/gfirem/akamai-edge-grid-auth.svg?branch=master)](https://travis-ci.org/gfirem/akamai-edge-grid-auth) [![Known Vulnerabilities](https://snyk.io/test/github/gfirem/akamai-edge-grid-auth/badge.svg)](https://snyk.io/test/github/gfirem/akamai-edge-grid-auth)
-# Akamai EdgeGrid Authentication Modue
+# Akamai EdgeGrid Authentication Module
 
 To include this module in your code:
 
