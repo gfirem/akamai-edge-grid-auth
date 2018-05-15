@@ -13,6 +13,18 @@
 // limitations under the License.
 'use strict';
 
-module.exports = {
-  edgeGridAuth: require('./src/edge-grid-auth.js'),
+function Credential(data) {
+  this.data = JSON.parse(data);
+}
+
+Credential.prototype.data = {};
+
+Credential.prototype.get = function(name) {
+  return this.data[name];
 };
+
+Credential.prototype.set = function(name, value) {
+  this.data[name] = value;
+};
+
+module.exports = Credential;
