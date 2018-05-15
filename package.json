@@ -4,7 +4,6 @@
   "description": "Akamai EdgeGrid Authentication Module",
   "repository": "https://github.com/gfirem/akamai-edge-grid-auth",
   "license": "MIT",
-  "private": true,
   "engines": {
     "node": ">=8.0.0"
   },
