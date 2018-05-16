@@ -1,6 +1,6 @@
 {
   "name": "akamai-edge-grid-auth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Akamai EdgeGrid Authentication Module",
   "repository": "https://github.com/gfirem/akamai-edge-grid-auth",
   "license": "MIT",
