@@ -10,7 +10,8 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore .",
     "pretest": "npm run lint",
-    "test": "snyk test && nyc --reporter=html --reporter=text mocha test --timeout 0"
+    "test": "snyk test && nyc --reporter=html --reporter=text mocha test --timeout 0",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "main": "./index.js",
   "files": [

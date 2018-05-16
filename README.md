@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gfirem/akamai-edge-grid-auth.svg?branch=master)](https://travis-ci.org/gfirem/akamai-edge-grid-auth) [![Known Vulnerabilities](https://snyk.io/test/github/gfirem/akamai-edge-grid-auth/badge.svg)](https://snyk.io/test/github/gfirem/akamai-edge-grid-auth)
+[![Build Status](https://travis-ci.org/gfirem/akamai-edge-grid-auth.svg?branch=master)](https://travis-ci.org/gfirem/akamai-edge-grid-auth) [![Known Vulnerabilities](https://snyk.io/test/github/gfirem/akamai-edge-grid-auth/badge.svg)](https://snyk.io/test/github/gfirem/akamai-edge-grid-auth) [![Coverage Status](https://coveralls.io/repos/gfirem/akamai-edge-grid-auth/badge.svg?branch=master)](https://coveralls.io/r/gfirem/akamai-edge-grid-auth?branch=master)
 # Akamai EdgeGrid Authentication Module
 
 To include this module in your code:

@@ -125,8 +125,7 @@ class EdgeGridAuth {
   }
 
   /**
-   * Setup authentication for Akamai.
-   * Note this function will override the section if exist.
+   * Setup authentication for Akamai. This function will override the section if exist.
    *
    * @param {string} fileName
    * @param {object} newConfig
