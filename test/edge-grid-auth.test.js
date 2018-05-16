@@ -38,6 +38,12 @@ describe('EdgeGridAuth', function() {
         })
         .catch(done);
     });
+    it('test create credentials Exception for no file name', function(done) {
+      expect(function() {
+        edgeGridAuth.createConfigFile()
+      }).to.throw('Invalid File Name parameter');
+      done();
+    });
     it('write configuration file', function(done) {
       edgeGridAuth.writeConfigFile(fileName, fileContent)
         .then(() => {
@@ -47,6 +53,12 @@ describe('EdgeGridAuth', function() {
         })
         .catch(done);
     });
+    it('test write credentials Exception for no file name', function(done) {
+      expect(function() {
+        edgeGridAuth.writeConfigFile()
+      }).to.throw('Invalid File Name parameter');
+      done();
+    });
     it('read configuration file', function(done) {
       edgeGridAuth.readConfigFile(fileName)
         .then((result) => {
@@ -54,6 +66,12 @@ describe('EdgeGridAuth', function() {
           done();
         })
         .catch(done);
+    });
+    it('test read credentials Exception for no file name', function(done) {
+      expect(function() {
+        edgeGridAuth.readConfigFile()
+      }).to.throw('Invalid File Name parameter');
+      done();
     });
   });
 
@@ -138,6 +156,18 @@ describe('EdgeGridAuth', function() {
           done();
         })
     });
+    it('test paste credentials Exception for no file name', function(done) {
+      expect(function() {
+        edgeGridAuth.paste()
+      }).to.throw('Invalid File Name parameter');
+      done();
+    });
+    it('test paste credentials Exception for no options', function(done) {
+      expect(function() {
+        edgeGridAuth.paste(fileName)
+      }).to.throw('Invalid set of new Options parameter');
+      done();
+    });
     it('test copy credentials', function(done) {
       edgeGridAuth.copy(fileName, 'section2', 'section1')
         .then((result) => {
@@ -145,6 +175,18 @@ describe('EdgeGridAuth', function() {
           expect(result['section1'].client_secret).to.equal('loremipsumdolor');
           done();
         })
+    });
+    it('test copy credentials Exception for no file name', function(done) {
+      expect(function() {
+        edgeGridAuth.copy()
+      }).to.throw('Invalid File Name parameter');
+      done();
+    });
+    it('test copy credentials Exception for form and to parameter', function(done) {
+      expect(function() {
+        edgeGridAuth.copy(fileName)
+      }).to.throw('Invalid parameters from and to');
+      done();
     });
     it('test setup credentials', function(done) {
       const newOptions = {
@@ -163,6 +205,18 @@ describe('EdgeGridAuth', function() {
           expect(result['section2'].client_secret).to.equal('loremipsumdolor');
           done();
         })
+    });
+    it('test setup credentials Exception for no file name', function(done) {
+      expect(function() {
+        edgeGridAuth.setup()
+      }).to.throw('Invalid File Name parameter');
+      done();
+    });
+    it('test setup credentials Exception for no options', function(done) {
+      expect(function() {
+        edgeGridAuth.setup(fileName)
+      }).to.throw('Invalid new configuration in parameters');
+      done();
     });
   });
 });

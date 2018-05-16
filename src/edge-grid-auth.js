@@ -13,10 +13,10 @@
 // limitations under the License.
 'use strict';
 
-let untildify = require('untildify');
-let ini = require('ini');
-let merge = require('merge');
-let EdgeGrid = require('edgegrid');
+const untildify = require('untildify');
+const ini = require('ini');
+const merge = require('merge');
+const EdgeGrid = require('edgegrid');
 const Credential = require('./model/credential');
 const fs = require('fs');
 const DefaultSection = 'default';
@@ -25,6 +25,21 @@ const DefaultSection = 'default';
  * EdgeGrid Authentication
  */
 class EdgeGridAuth {
+  /**
+   * Check if file exist
+   *
+   * @param fileName
+   * @returns {boolean}
+   */
+  fileExist(fileName) {
+    let edgercPath = untildify(fileName);
+    let fileExist = fs.existsSync(edgercPath);
+    if (!fileExist) {
+      throw new Error('The configuration file in %s not exist'.replace('%s', edgercPath));
+    }
+    return true;
+  }
+
   /**
    * Verify existing credentials
    *
@@ -38,6 +53,7 @@ class EdgeGridAuth {
     if (!fileName) {
       throw new Error('Invalid File Name parameter');
     }
+    this.fileExist(fileName);
     section = section || DefaultSection;
     debug = debug || false;
     this.edgeGrid = new EdgeGrid({
@@ -77,10 +93,10 @@ class EdgeGridAuth {
    */
   paste(fileName, section, newOptions, overwrite) {
     if (!fileName) {
-      throw new Error('Invalid file name parameter');
+      throw new Error('Invalid File Name parameter');
     }
     if (!newOptions) {
-      throw new Error('Invalid set of new options parameter');
+      throw new Error('Invalid set of new Options parameter');
     }
     return new Promise((resolve) => {
       this.readConfigFile(fileName)
@@ -109,7 +125,7 @@ class EdgeGridAuth {
    */
   copy(fileName, from, to) {
     if (!fileName) {
-      throw new Error('Invalid file name');
+      throw new Error('Invalid File Name parameter');
     }
     if (!from || !to) {
       throw new Error('Invalid parameters from and to');
@@ -136,7 +152,7 @@ class EdgeGridAuth {
    */
   setup(fileName, newConfig, section, currentConfig) {
     if (!fileName) {
-      throw new Error('Invalid file name');
+      throw new Error('Invalid File Name parameter');
     }
     if (!newConfig) {
       throw new Error('Invalid new configuration in parameters');
@@ -160,7 +176,7 @@ class EdgeGridAuth {
    */
   createConfigFile(fileName) {
     if (!fileName) {
-      throw new Error('Invalid file name');
+      throw new Error('Invalid File Name parameter');
     }
     let contents = '';
     let options = {'flag': 'a'};
@@ -177,6 +193,9 @@ class EdgeGridAuth {
    * @returns {Promise<any>}
    */
   writeConfigFile(fileName, contents, options) {
+    if (!fileName) {
+      throw new Error('Invalid File Name parameter');
+    }
     options = options || {};
     return new Promise(function(resolve) {
       contents = contents.replace(/['"]+/g, '');
@@ -201,6 +220,10 @@ class EdgeGridAuth {
    * @returns {Promise<any>}
    */
   readConfigFile(fileName, section, options) {
+    if (!fileName) {
+      throw new Error('Invalid File Name parameter');
+    }
+    this.fileExist(fileName);
     return new Promise(function(resolve) {
       fs.readFile(untildify(fileName), options, function(error, result) {
         if (error) {
