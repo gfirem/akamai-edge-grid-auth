@@ -218,6 +218,12 @@ describe('EdgeGridAuth', function() {
       }).to.throw('Invalid new configuration in parameters');
       done();
     });
+    it('test if file exist Exception', function(done) {
+      expect(function() {
+        edgeGridAuth.fileExist('sdf4334dsfsd')
+      }).to.throw('The configuration file in sdf4334dsfsd not exist');
+      done();
+    });
   });
 });
 
