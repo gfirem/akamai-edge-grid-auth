@@ -15,14 +15,14 @@
 'use strict';
 
 const {expect, assert} = require('chai');
-const EdgeGridAuth = require('../src/edge-grid-auth');
+const EdgeGridAuthMock = require('../src/util/EdgeGridAuthMock');
 const fs = require('fs');
 const fileName = 'test.config';
 const exec = require('child-process-promise').exec;
 require('dotenv').config();
 let fileContent = 'Lorem Ipsum Dolor';
 let ini = require('ini');
-let edgeGridAuth = new EdgeGridAuth();
+let edgeGridAuth = new EdgeGridAuthMock();
 
 describe('EdgeGridAuth', function() {
   after('Test for EdgeGridAuth', () => {
@@ -87,9 +87,67 @@ describe('EdgeGridAuth', function() {
       fileContent = ini.stringify(config, {whitespace: true});
       edgeGridAuth.writeConfigFile(fileName, fileContent);
     });
-    it('test verify credentials', function(done) {
+    it('test verify credentials with file content callback', function(done) {
       this.timeout(5000);
-      edgeGridAuth.verify(fileName)
+      edgeGridAuth.verify(fileName, 'default', false, () => {
+        return {
+          client_secret: 'loremipsumdolor',
+          host: 'http://loremipsumdolor.com',
+          access_token: 'loremipsumdolor',
+          client_token: 'loremipsumdolor',
+        }
+      })
+        .then((result) => {
+          assert.isDefined(result.data);
+          expect(result.get('client_secret')).to.equal('loremipsumdolor');
+          done();
+        })
+        .catch(done);
+    });
+    it('test verify credentials with file content callback and invalid host params', function(done) {
+      const fileContentCallback = () => {
+        return {
+          client_secret: 'loremipsumdolor',
+          host: '',
+          access_token: 'loremipsumdolor',
+          client_token: 'loremipsumdolor',
+        }
+      };
+      edgeGridAuth.verify(fileName, 'default', false, fileContentCallback)
+        .catch((error)=>{
+          expect(error).to.not.be.null;
+          expect(error).to.not.be.undefined;
+          expect(error.message).to.equal("No defined host");
+        });
+      done();
+    });
+    it('test verify credentials with file content callback and invalid client secret params', function(done) {
+      process.env.EDGEGRID_ENV='test';
+      const fileContentCallback = () => {
+        return {
+          host: 'http://loremipsumdolor.com',
+          access_token: 'loremipsumdolor',
+          client_token: 'loremipsumdolor',
+        }
+      };
+      edgeGridAuth.verify(fileName, 'default', false, fileContentCallback)
+        .catch((error)=>{
+          expect(error).to.not.be.null;
+          expect(error).to.not.be.undefined;
+          expect(error.message).to.equal("Insufficient Akamai credentials");
+        });
+      done();
+    });
+    it('test verify credentials', function(done) {
+      const fileContentCallback = () => {
+        return {
+          client_secret: 'loremipsumdolor',
+          host: 'http://loremipsumdolor.com',
+          access_token: 'loremipsumdolor',
+          client_token: 'loremipsumdolor',
+        }
+      };
+      edgeGridAuth.verify(fileName, 'default', false, fileContentCallback)
         .then((result) => {
           assert.isDefined(result.data);
           done();
@@ -103,8 +161,15 @@ describe('EdgeGridAuth', function() {
       done();
     });
     it('test credentials', function(done) {
-      this.timeout(5000);
-      edgeGridAuth.verify(fileName)
+      const fileContentCallback = () => {
+        return {
+          client_secret: 'loremipsumdolor',
+          host: 'http://loremipsumdolor.com',
+          access_token: 'loremipsumdolor',
+          client_token: 'loremipsumdolor',
+        }
+      };
+      edgeGridAuth.verify(fileName, 'default', false, fileContentCallback)
         .then((result) => {
           expect(result.get('name')).to.equal('Kirsten World Tour');
           result.set('description', 'loremipsumdolor');

@@ -40,6 +40,7 @@ class EdgeGridAuth {
     return true;
   }
 
+  /* istanbul ignore next */
   /**
    * Verify existing credentials
    *
@@ -48,6 +49,7 @@ class EdgeGridAuth {
    * @param debug
    *
    * @returns {Promise<Credential>}
+   *
    */
   verify(fileName, section, debug) {
     if (!fileName) {
@@ -61,7 +63,7 @@ class EdgeGridAuth {
       section: section,
       debug: debug,
     });
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let request = {
         method: 'GET',
         path: '/-/client-api/active-grants/implicit',
@@ -74,7 +76,7 @@ class EdgeGridAuth {
           if (data instanceof Error) {
             errorMessage = 'An error occurred, with the message ' + data.message;
           }
-          throw new Error(errorMessage);
+          reject(new Error(errorMessage));
         }
         let credential = new Credential(response.body);
         resolve(credential);
@@ -133,6 +135,7 @@ class EdgeGridAuth {
     return this.readConfigFile(fileName)
       .then(config => {
         if (!config[from]) {
+          /* istanbul ignore next */
           throw new Error('Error! the from config item not exist');
         }
         config[to] = config[from];
@@ -202,6 +205,7 @@ class EdgeGridAuth {
 
       fs.writeFile(untildify(fileName), contents, options, function(error) {
         if (error) {
+          /* istanbul ignore next */
           throw error;
         } else {
           resolve(contents);
@@ -227,10 +231,12 @@ class EdgeGridAuth {
     return new Promise(function(resolve) {
       fs.readFile(untildify(fileName), options, function(error, result) {
         if (error) {
+          /* istanbul ignore next */
           throw error;
         } else {
           let configObject = ini.parse(result.toString());
           if (section) {
+            /* istanbul ignore next */
             resolve(configObject[section]);
           } else {
             resolve(configObject);
