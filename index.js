@@ -15,4 +15,5 @@
 
 module.exports = {
   edgeGridAuth: require('./src/edge-grid-auth.js'),
+  edgeGridAuthMock: require('./src/util/EdgeGridAuthMock'),
 };
